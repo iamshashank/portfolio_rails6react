@@ -72,7 +72,7 @@ const useStyles = theme => ({
     width: '100%',
     // overflow: 'unset',
     [theme.breakpoints.up('sm')]: { // eslint-disable-line no-useless-computed-key
-      width: 600
+      width: "100%"
     },
     [theme.breakpoints.up('md')]: { // eslint-disable-line no-useless-computed-key
       width: 700
