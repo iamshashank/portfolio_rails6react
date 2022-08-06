@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import {Divider, Avatar, Tabs, Tab, Paper, Box, CardMedia, CardContent, CardActionArea, CardActions, Card, Typography} from '@material-ui/core';
 import YouTube from './Youtube';
 import Career from './Career';
+import Cover from './Cover';
 
 
 function TabPanel(props) {
@@ -142,7 +143,7 @@ const useStyles = theme => ({
     left: 24,
     lineHeight: 2,
     fontSize: "0.8rem",
-    fontWeight: 399
+    fontWeight: 400
   }
 });
 
@@ -195,36 +196,37 @@ class MainProfile extends React.Component {
           </CardMedia>
         </CardActionArea>
         <CardContent>
+          <Cover/>
           <Career title="Professional Career" type="career" />
           <Career title="Education" type="education" />
         </CardContent>
-      <CardActions className={classes.actionClass}>
-        <CardActionIcons />
-      </CardActions>
-      <CardContent className={classes.gitRepoInfo}>
-        <div>
-          <Paper position="static">
-            <Tabs
-              variant="fullWidth"
-              value={this.state.value}
-              onChange={this.handleChange}
-              aria-label="nav tabs example"
-            >
-              <LinkTab label={`Github [ ${this.state.data.followers || ''} ]`} href="/" {...a11yProps(0)} />
-              <LinkTab label="Youtube" href="/" {...a11yProps(1)} />
-              {/* <LinkTab label="Page Three" href="/" {...a11yProps(2)} /> */}
-            </Tabs>
-          </Paper>
-          <TabPanel value={this.state.value} index={0}>
-            <GithubInfo data={this.state.data} dataLoaded={this.state.dataLoaded} />
-          </TabPanel>
-          <TabPanel value={this.state.value} index={1}>
-            <YouTube videoIds={[]} />
-          </TabPanel>
-        </div>
-        
-      </CardContent>      
-    </Card>
+        <CardActions className={classes.actionClass}>
+          <CardActionIcons />
+        </CardActions>
+        <CardContent className={classes.gitRepoInfo}>
+          <div>
+            <Paper position="static">
+              <Tabs
+                variant="fullWidth"
+                value={this.state.value}
+                onChange={this.handleChange}
+                aria-label="nav tabs example"
+              >
+                <LinkTab label={`Github [ ${this.state.data.followers || ''} ]`} href="/" {...a11yProps(0)} />
+                <LinkTab label="Youtube" href="/" {...a11yProps(1)} />
+                {/* <LinkTab label="Page Three" href="/" {...a11yProps(2)} /> */}
+              </Tabs>
+            </Paper>
+            <TabPanel value={this.state.value} index={0}>
+              <GithubInfo data={this.state.data} dataLoaded={this.state.dataLoaded} />
+            </TabPanel>
+            <TabPanel value={this.state.value} index={1}>
+              <YouTube videoIds={[]} />
+            </TabPanel>
+          </div>
+          
+        </CardContent>      
+      </Card>
     );
   }
 }

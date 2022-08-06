@@ -98,7 +98,7 @@ class GithubInfo extends React.Component {
 
   perRepoLanguages(lang, key){
     return(
-      <Chip color="grey" size="small" label={lang}/>
+      <Chip style={{marginRight: 4, marginBottom: 8}} color="grey" size="small" label={lang}/>
     );
   }
 

@@ -4,6 +4,8 @@ import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typograph
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EducationCard  from "./EducationCard";
 import ProfessionCard from "./ProfessionCard";
+import Timeline from '@material-ui/lab/Timeline';
+
 
 const useStyles = theme => ({
   root:{
@@ -12,7 +14,6 @@ const useStyles = theme => ({
     boxShadow: 'none'
   },
   heading: {
-    
   }
 });
 
@@ -23,8 +24,8 @@ class Career extends React.Component{
     super(props)
     this.state = {
       jobs: [
-        {name: "Punchh", post: "SDE-II", from: "01/11/2021", to: null, current: true},
-        {name: "Daffodil Software", post: "Associate IT", from: "18/03/2018", to: "30/10/2021", current: false},
+        {name: "Punchh", post: "SDE-II", from: "11/2021", to: null, current: true},
+        {name: "Daffodil Software", post: "Associate IT", from: "03/2018", to: "10/2021", current: false},
       ],
       schools: [
         {degree: "B.Tech in Computer Sience", name: "Galgotias College of Engg & Technology", from: "2014", to: "2018"},
@@ -45,10 +46,12 @@ class Career extends React.Component{
     return(
       <ExpansionPanel className={classes.root}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-          <Typography variant="h6" className={classes.heading}>{this.props.title}</Typography>
+          <Typography variant="h6subtitle1" className={classes.heading} color="textSecondary">{this.props.title}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          {content}
+          <Timeline align="alternate">
+            {content}
+          </Timeline>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     )

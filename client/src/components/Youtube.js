@@ -8,7 +8,13 @@ import React from "react";
 const useStyles = theme => ({
   noneD: {
     display: 'none'
+  },
+
+  chipSpacing: {
+    marginRight: 8,
+    marginBottom: 8
   }
+
 });
 
 
@@ -54,9 +60,9 @@ class Youtube extends React.Component{
           { this.state.data.videos.map((vid)=> this.getVideoIframe(vid) )  }
         </div>
         <div>
-          <Chip style={{marginRight: 8}} color="secondary" size="medium" label={`${this.state.data.stats.subscriberCount} subscriber`} variant="outlined" icon={<FaceIcon />}/>
-          <Chip style={{marginRight: 8}} color="secondary" size="medium" label={`${this.state.data.stats.videoCount} videos`} variant="outlined"/>
-          <Chip style={{marginRight: 8}} color="secondary" size="medium" label={`${this.state.data.stats.viewCount} views`} variant="outlined"/>
+          <Chip className={classes.chipSpacing} color="secondary" size="medium" label={`${this.state.data.stats.subscriberCount} subscriber`} variant="outlined" icon={<FaceIcon />}/>
+          <Chip className={classes.chipSpacing}  color="secondary" size="medium" label={`${this.state.data.stats.videoCount} videos`} variant="outlined"/>
+          <Chip className={classes.chipSpacing}  color="secondary" size="medium" label={`${this.state.data.stats.viewCount} views`} variant="outlined"/>
         </div>
       </div>
     }
