@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import EmailIcon from '@material-ui/icons/Email';
-import TwitterIcon from '@material-ui/icons/Twitter';
+import Code from '@material-ui/icons/Code';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 
 
@@ -30,9 +30,9 @@ export default function CardActionIcons() {
           <YouTubeIcon />
         </IconButton>
       </a>
-      <a target='blank' href="https://twitter.com/shashank0x1?ref_src=twsrc%5Etfw" className="twitter-follow-button" data-show-count="false">
+      <a target='blank' href="https://leetcode.com/shashank0x1/" className="leetcode-button" data-show-count="false">
         <IconButton aria-label="delete">
-          <TwitterIcon />
+          <Code />
         </IconButton>
       </a>
       <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script>

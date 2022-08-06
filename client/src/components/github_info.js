@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Badge from '@material-ui/core/Badge';
+import { Chip } from '@material-ui/core';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,7 +29,6 @@ function TabPanel(props) {
 }
 
 
-{/* <Divider variant="inset" component="li" /> */}
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -59,12 +55,7 @@ function LinkTab(props) {
   );
 }
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     flexGrow: 1,
-//     backgroundColor: theme.palette.background.paper,
-//   },
-// }));
+
 const useStyles = theme => ({
   root: {
     flexGrow: 1,
@@ -72,7 +63,9 @@ const useStyles = theme => ({
   },
   rootList: {
     width: '100%',
-    maxHeight: 172,
+    height: 285,
+    marginBottom: 8,
+    // maxHeight: 242,
     padding: 0,
     overflowY: 'scroll'    
   },
@@ -89,62 +82,55 @@ const useStyles = theme => ({
 class GithubInfo extends React.Component {
   constructor(props) {
     super(props);
-    // this.classes = useStyles();
-    this.state = {
-      value: 0,
-      dataLoaded: false,
-      data: {}
-    };    
+    this.state = { value: 0 }
+    // this.classes = useStyles(); 
     // This binding is necessary to make `this` work in the callback
     this.handleChange = this.handleChange.bind(this);
     this.repoListItem = this.repoListItem.bind(this);
     this.generateRepoList = this.generateRepoList.bind(this);
+    this.generateRepoLanguageList = this.generateRepoLanguageList.bind(this);
+    this.perRepoLanguages = this.perRepoLanguages.bind(this);
   }
 
   handleChange(event, newValue){
     this.setState({value: newValue});
   }
 
-  componentWillMount() {
-    fetch('/api/v1/total_repos')
-    .then(r => r.json())
-    .then(r => {
-      if (r.status === true){
-        this.setState({
-          value: 0,
-          dataLoaded: true,
-          data: r
-        }); 
-      }
-      // console.log(r);
-    }).catch(e => console.log(e))
+  perRepoLanguages(lang, key){
+    return(
+      <Chip color="grey" size="small" label={lang}/>
+    );
   }
 
   repoListItem(repo, classes, key){
     return (
-      <a target='blank' href={repo.html_url} style={{textDecoration: 'none'}}>
-        <ListItem key={key} alignItems="flex-start" button={true} divider={true} style={{width: '100%'}}>
-        <ListItemAvatar>
-          <Avatar variant='rounded' alt={repo.name} src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary={repo.name}
-          secondary={
-            <React.Fragment>
-              <Typography
-                component="span"
-                variant="body2"
-                className={classes.inline}
-                color="textPrimary"
-              >
-              {`${repo.description} `}
-              </Typography>
-            </React.Fragment>
-          }
-        />
+      <a key={key} target='blank' href={repo.html_url} style={{textDecoration: 'none'}}>
+        <ListItem alignItems="flex-start" button={true} divider={true} style={{width: '100%'}}>
+          <ListItemAvatar>
+            <Avatar variant='rounded' alt={repo.name} src="/static/images/avatar/1.jpg" />
+          </ListItemAvatar>
+          <div>
+            <ListItemText
+              primary={repo.name}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    className={classes.inline}
+                    color="textPrimary"
+                  >
+                  {`${repo.description} `}
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            {this.generateRepoLanguageList(repo.languages)}
+          </div>
         </ListItem>
       </a>
     );
+    // {this.generateRepoLanguageList(repo.languages)}
   }
 
   organizationItem(org, classes, key){
@@ -164,7 +150,7 @@ class GithubInfo extends React.Component {
                   className={classes.inline}
                   color="textPrimary"
                 >
-                {`${org.description} `}
+                {`${org.description}`}
                 </Typography>
               </React.Fragment>
             }
@@ -174,52 +160,59 @@ class GithubInfo extends React.Component {
     );    
   }
 
-  generateRepoList(state, classes) {
+  generateRepoLanguageList(languages){
+    if(this.props.dataLoaded){
+      return languages.map((lang)=> this.perRepoLanguages(lang));
+    }
+  }
+
+  generateRepoList(data, classes) {
     // console.log('called', state, classes);
-    if (state.dataLoaded){
-      return state.data.last_5_repo.map((repo, index)=> this.repoListItem(repo, classes, index));
+    if (this.props.dataLoaded){
+      return data.last_5_repo.map((repo, index)=> this.repoListItem(repo, classes, index));
     } 
   }  
 
-  generateOrganizationList(state, classes) {
-    if (state.dataLoaded){
-      return state.data.organizations.map((org, index)=> this.organizationItem(org, classes, index));
+  generateOrganizationList(data, classes) {
+    if (this.props.dataLoaded){
+      return data.organizations.map((org, index)=> this.organizationItem(org, classes, index));
     } 
   }
   
   render(){
-
     const { classes } = this.props;
     return (
-      
-      <div className={classes.root}>
-        <Paper position="static">
-          <Tabs
-            variant="fullWidth"
-            value={this.state.value}
-            onChange={this.handleChange}
-            aria-label="nav tabs example"
-          >
-            <LinkTab label={`Repos [ ${this.state.data.repo_count || ''} ]`} href="/" {...a11yProps(0)} />
-            <LinkTab label="Organizations" href="/" {...a11yProps(1)} />
-            {/* <LinkTab label="Page Three" href="/" {...a11yProps(2)} /> */}
-          </Tabs>
-        </Paper>
-        <TabPanel value={this.state.value} index={0} className={classes.tabPanel} >
-            <List className={classes.rootList}>
-              {this.generateRepoList(this.state, classes)}
-            </List>
-
-        </TabPanel>
-        <TabPanel value={this.state.value} index={1}>
-          <List className={classes.root}>
-          {this.generateOrganizationList(this.state, classes)}
-          </List>
-        </TabPanel>
-        {/* <TabPanel value={value} index={2}>
-          Page Three
-        </TabPanel> */}
+      <div>
+        <List className={classes.rootList}>
+          {this.generateOrganizationList(this.props.data, classes)}
+          {this.generateRepoList(this.props.data, classes)}
+        </List>
       </div>
+      // <div className={classes.root}>
+      //   <Paper position="static">
+      //     <Tabs
+      //       variant="fullWidth"
+      //       value={this.state.value}
+      //       onChange={this.handleChange}
+      //       aria-label="nav tabs example"
+      //     >
+      //       <LinkTab label={`Github repo [ ${this.props.data.repo_count || ''} ]`} href="/" {...a11yProps(0)} />
+      //       <LinkTab label="Organizations" href="/" {...a11yProps(1)} />
+      //       {/* <LinkTab label="Page Three" href="/" {...a11yProps(2)} /> */}
+      //     </Tabs>
+      //   </Paper>
+      //   <TabPanel value={this.state.value} index={0} className={classes.tabPanel} >
+      //       <List className={classes.rootList}>
+      //         {this.generateRepoList(this.props.data, classes)}
+      //       </List>
+
+      //   </TabPanel>
+      //   <TabPanel value={this.state.value} index={1}>
+      //     <List className={classes.root}>
+      //     {this.generateOrganizationList(this.props.data, classes)}
+      //     </List>
+      //   </TabPanel>
+      // </div>
     );
   }
 

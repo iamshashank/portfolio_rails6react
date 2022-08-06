@@ -19,5 +19,8 @@
     "install": "cd client && yarn"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "yarn": "^1.22.19"
+  }
 }

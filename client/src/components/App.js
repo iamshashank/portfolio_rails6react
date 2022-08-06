@@ -1,8 +1,6 @@
 import React from 'react';
 import '../assets/css/App.css';
-import Uploader from './uploader'
 import Container from '@material-ui/core/Container';
-import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
@@ -30,13 +28,9 @@ function App() {
     <Container className="App-header" style={{ display: 'flex', flexDirection: 'column',
     justifyContent: 'center', paddingTop: 24, paddingBottom: 24}} maxWidth={false} >
       <Grid container spacing={4}>
-        {/* <Divider absolute={true} light={true} className={classes.appDivider} /> */}
         <Grid key={1} item xs={12} style={{alignSelf: 'center'}}>
           <MainProfile />
         </Grid>
-        {/* <Grid key={2} item xs={12} md={8}>
-          <SecondaryProfile />
-        </Grid> */}
       </Grid>
     </Container>
   );
