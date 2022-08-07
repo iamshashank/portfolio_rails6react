@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CardActionIcons from './card_action_icons';
 import GithubInfo from './github_info';
 import PropTypes from 'prop-types';
-import {Divider, Avatar, Tabs, Tab, Paper, Box, CardMedia, CardContent, CardActionArea, CardActions, Card, Typography} from '@material-ui/core';
+import {Divider, Avatar, Tabs, Tab, Paper, Box, CardMedia, CardContent, CardActionArea, CardActions, Card, Typography, AppBar} from '@material-ui/core';
 import YouTube from './Youtube';
 import Career from './Career';
 import Cover from './Cover';
@@ -144,6 +144,10 @@ const useStyles = theme => ({
     lineHeight: 2,
     fontSize: "0.8rem",
     fontWeight: 400
+  },
+  appBarTab: {
+    backgroundColor: "#5AB1BB",
+    boxShadow: "none"
   }
 });
 
@@ -199,13 +203,14 @@ class MainProfile extends React.Component {
           <Cover/>
           <Career title="Professional Career" type="career" />
           <Career title="Education" type="education" />
+          <Career title="Achievements & Recognition" type="success" />
         </CardContent>
         <CardActions className={classes.actionClass}>
           <CardActionIcons />
         </CardActions>
         <CardContent className={classes.gitRepoInfo}>
           <div>
-            <Paper position="static">
+            <AppBar className={classes.appBarTab} position="static">
               <Tabs
                 variant="fullWidth"
                 value={this.state.value}
@@ -216,7 +221,7 @@ class MainProfile extends React.Component {
                 <LinkTab label="Youtube" href="/" {...a11yProps(1)} />
                 {/* <LinkTab label="Page Three" href="/" {...a11yProps(2)} /> */}
               </Tabs>
-            </Paper>
+            </AppBar>
             <TabPanel value={this.state.value} index={0}>
               <GithubInfo data={this.state.data} dataLoaded={this.state.dataLoaded} />
             </TabPanel>
