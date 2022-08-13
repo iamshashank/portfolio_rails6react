@@ -62,6 +62,8 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    airbrake-ruby (6.1.1)
+      rbtree3 (~> 0.5)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -136,6 +138,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.4)
+    rack-attack (6.6.1)
+      rack (>= 1.0, < 3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
     rack-test (2.0.2)
@@ -170,6 +174,7 @@ GEM
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rbtree3 (0.7.0)
     redis (4.7.1)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
@@ -208,6 +213,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  airbrake-ruby
   bootsnap (>= 1.4.2)
   byebug
   dotenv-rails
@@ -221,6 +227,7 @@ DEPENDENCIES
   newrelic_rpm
   octokit
   puma (~> 4.1)
+  rack-attack
   rack-cors
   rails (~> 6.1, >= 6.0.2.1)
   redis
